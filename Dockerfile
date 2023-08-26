@@ -10,4 +10,4 @@ RUN pip install --upgrade pip
 COPY ./requirements.txt .
 RUN pip3 install -r requirements.txt
 
-CMD ./start.sh
+CMD ["python", "-u", "main.py"]
