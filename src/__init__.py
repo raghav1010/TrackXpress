@@ -25,9 +25,9 @@ def run_upgrade():
     try:
         upgrade(directory='migrations')
         return "Migrations applied, Alembic head upgraded!"
-    except Exception as err:
-        logging.exception(str(err))
-        return "Upgrade head failed --- {}".format(str(err))
+    except Exception as exc:
+        logging.exception(str(exc))
+        return "Upgrade head failed --- {}".format(str(exc))
 
 
 @APP.route("/migrate_db_down")
@@ -35,9 +35,9 @@ def downgrade_db():
     try:
         downgrade(directory='migrations')
         return "Migrations applied! - Downgrade Done"
-    except Exception as err:
-        logging.exception(str(err))
-        return "Downgrade head failed --- {}".format(str(err))
+    except Exception as exc:
+        logging.exception(str(exc))
+        return "Downgrade head failed --- {}".format(str(exc))
 
 
 @APP.route("/run_migrations/<message>")
@@ -45,6 +45,6 @@ def run_migrations_db(message=""):
     try:
         run_migrations(directory='migrations', message=message)
         return "Migrations applied, revision generated!"
-    except Exception as err:
-        logging.exception(str(err))
-        return "Failed to generate migrations --- {}".format(str(err))
+    except Exception as exc:
+        logging.exception(str(exc))
+        return "Failed to generate migrations --- {}".format(str(exc))
