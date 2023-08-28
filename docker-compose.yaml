@@ -15,6 +15,20 @@ services:
     volumes:
       - ./.tmp/psgdb:/var/lib/postgresql@14/data
 
+  db.ut_track_xpress:
+    container_name: db_ut_track_xpress
+    image: postgres
+    restart: always
+    environment:
+      - POSTGRES_UT_DB=track_xpress_ut_db
+      - POSTGRES_UT_USER=track_xpress_ut_user
+      - POSTGRES_UT_PASSWORD=track_xpress_ut_password
+      - POSTGRES_HOST_AUTH_METHOD=trust
+    ports:
+      - "5432"
+    volumes:
+      - ./.tmp/psgdb:/var/lib/postgresql@14/data
+
 
   app.track_xpress:
     container_name: app_track_xpress

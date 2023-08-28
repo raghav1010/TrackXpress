@@ -1,7 +1,7 @@
 import logging
 
 from library.sql.exceptions import SQLAlchemyException
-from library.sql.utils import session_wrap, add_session_instance, commit_session, refresh_session_instance
+from library.sql.utils import session_wrap, add_session_instance, flush_session
 
 from src.tracking_planner_transactions.models import TrackingPlanTransaction
 
@@ -11,8 +11,7 @@ def create_tracking_plan_transaction_record(data, session=None):
     try:
         tracking_plan_transaction_record = TrackingPlanTransaction.create(**data)
         add_session_instance(session, tracking_plan_transaction_record)
-        commit_session(session)
-        refresh_session_instance(session, tracking_plan_transaction_record)
+        flush_session(session)
     except SQLAlchemyException as exc:
         logging.exception(exc)
         return None, str(exc)
