@@ -14,4 +14,5 @@ with APP.app_context():
 
 
 if __name__ == "__main__":
+    print("running app")
     APP.run(host="0.0.0.0", port=5050, debug=True)
