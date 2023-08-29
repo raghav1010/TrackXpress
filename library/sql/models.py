@@ -4,7 +4,7 @@ from datetime import datetime
 
 from sqlalchemy import Column, DateTime
 from sqlalchemy.ext.declarative import declared_attr
-from sqlalchemy.sql.sqltypes import String
+from sqlalchemy.sql.sqltypes import String, Integer
 
 
 class TimestampMixin:
@@ -13,7 +13,7 @@ class TimestampMixin:
 
 
 class BaseSQLMixin:
-    id = Column(String(36), primary_key=True, default=str(uuid.uuid4()))
+    id = Column(Integer, primary_key=True)
 
     @declared_attr
     def __tablename__(cls):

@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String
+from sqlalchemy import Column, String, Integer
 from sqlalchemy.orm import validates
 
 from library.sql.models import TimestampMixin, BaseSQLMixin
@@ -6,9 +6,10 @@ from library.sql.utils import BASE, sql_check_choices
 from src.tracking_planner.tracking_plans.constants import TRACKING_PLAN_SOURCE_CHOICES
 
 
-class TrackingPlan(BASE, BaseSQLMixin, TimestampMixin):
+class TrackingPlan(BASE, TimestampMixin):
     __tablename__ = "tracking_plan"
-    name = Column(String(50), nullable=False, unique=True)
+    id = Column(Integer, primary_key=True)
+    name = Column(String(50), nullable=False)
     description = Column(String)
     source = Column(String(50), default="http")
 

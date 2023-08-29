@@ -28,6 +28,8 @@ def session_wrap(function_handler):
             kwargs["session"] = session
             logging.info("created session instance -> {}".format(session))
             close_session = True
+        print("session is: {}".format(session))
+        print("func handler: {}".format(function_handler.__name__))
         try:
             result = function_handler(*args, **kwargs)
         except Exception as err:

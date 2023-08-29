@@ -1,14 +1,15 @@
-from sqlalchemy import Column, String, ForeignKey
+from sqlalchemy import Column, String, ForeignKey, Integer
 
 from library.sql.models import TimestampMixin, BaseSQLMixin
 from library.sql.utils import BASE
 
 
-class TrackingPlanTransaction(BASE, BaseSQLMixin, TimestampMixin):
+class TrackingPlanTransaction(BASE, TimestampMixin):
     __tablename__ = "tracking_plan_transaction"
-    ref_id = Column(String, nullable=False, unique=True)
-    tracking_plan_id = Column(String, ForeignKey("tracking_plan.id"))
-    event_id = Column(String, ForeignKey("event.id"))
+    id = Column(Integer, primary_key=True)
+    ref_id = Column(String, nullable=False)
+    tracking_plan_id = Column(Integer, ForeignKey("tracking_plan.id"))
+    event_id = Column(Integer, ForeignKey("event.id"))
 
     def __repr__(self):
         return "{}".format(self.ref_id)

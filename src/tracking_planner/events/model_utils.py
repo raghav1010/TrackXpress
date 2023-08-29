@@ -6,7 +6,6 @@ from library.sql.utils import session_wrap, add_session_instance, flush_session
 from .models import Event
 
 
-@session_wrap
 def create_event_record(data, session=None):
     try:
         event_record = Event.create(**data)
@@ -21,7 +20,6 @@ def create_event_record(data, session=None):
     return event_record, ""
 
 
-@session_wrap
 def update_event_record(event_record, data, session=None):
     try:
         event_record.update(**data)
@@ -36,7 +34,6 @@ def update_event_record(event_record, data, session=None):
     return event_record, ""
 
 
-@session_wrap
 def get_event_record_by_id(event_id, session=None):
     if not event_id:
         return None
@@ -44,9 +41,13 @@ def get_event_record_by_id(event_id, session=None):
     return event_record
 
 
-@session_wrap
 def get_event_record_by_name(name, session=None):
     if not name:
         return None
     event_record = Event.get_by_name(name, session)
     return event_record
+
+
+def get_all_events(session=None):
+    event_records = Event.get_all(session)
+    return event_records

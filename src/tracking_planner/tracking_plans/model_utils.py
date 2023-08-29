@@ -6,7 +6,7 @@ from library.sql.utils import session_wrap, add_session_instance, flush_session
 from .models import TrackingPlan
 
 
-@session_wrap
+
 def create_tracking_plan_record(data, session=None):
     try:
         tracking_plan_record = TrackingPlan.create(**data)
@@ -21,13 +21,13 @@ def create_tracking_plan_record(data, session=None):
     return tracking_plan_record, ""
 
 
-@session_wrap
+
 def get_tracking_plan_record_by_id(tracking_plan_id, session=None):
     tracking_plan_record = TrackingPlan.get_by_id(tracking_plan_id, session)
     return tracking_plan_record
 
 
-@session_wrap
+
 def get_tracking_plan_record_by_source(source, session=None):
     tracking_plan_record = TrackingPlan.get_by_source(source, session)
     return tracking_plan_record

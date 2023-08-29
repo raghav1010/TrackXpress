@@ -2,7 +2,7 @@ import logging
 from flask import request
 from flask.views import MethodView
 
-from src.event_apis.handlers import create_tracking_plan_records
+from src.event_apis.handlers import create_tracking_plan_records, get_all_event_records
 from src.event_apis.utils import serialize_event_records
 from src.common.utils import get_api_result_dict, save_error_and_return_result
 
@@ -22,10 +22,8 @@ class EventTrackerAPI(MethodView):
             if error_details:
                 return save_error_and_return_result(error_details.get("error"), error_details.get("code"),
                                                     result_dict)
-            serialized_event_records = serialize_event_records(event_records_list=created_events)
             result_dict["result"]["message"] = "success"
             result_dict["result"]["code"] = 201
-            result_dict["result"]["records"] = serialized_event_records
         except Exception as exc:
             logging.exception(str(exc))
             return save_error_and_return_result("something went wrong", 500, result_dict)
@@ -35,7 +33,14 @@ class EventTrackerAPI(MethodView):
         pass
 
     def get(self):
-        pass
+        result_dict = get_api_result_dict()
+        event_records, error_details = get_all_event_records()
+        if error_details:
+            return save_error_and_return_result(error_details.get("error"), error_details.get("code"),
+                                                result_dict)
 
-
-
+        serialized_event_records = serialize_event_records(event_records_list=event_records)
+        result_dict["result"]["message"] = "success"
+        result_dict["result"]["code"] = 200
+        result_dict["result"]["records"] = serialized_event_records
+        return result_dict
