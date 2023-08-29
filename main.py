@@ -1,3 +1,4 @@
+import logging
 import sys
 
 from flask_migrate import Migrate
@@ -6,6 +7,7 @@ from app_config import configure_application
 from library.sql.utils import BASE, ENGINE
 from src import APP
 
+logging.basicConfig(level=logging.DEBUG)
 
 with APP.app_context():
     configure_application()

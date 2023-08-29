@@ -100,3 +100,23 @@ def rollback_session(session):
         error_msg = "Database Rollback Generic Error: {}".format(str(exc))
         logging.exception(error_msg)
         raise SQLAlchemyException(error_msg)
+
+
+def refresh_session_instance(session, instance, _attribute_names=None, _with_for_update=None):
+    try:
+        session.refresh(instance, attribute_names=_attribute_names, with_for_update=_with_for_update)
+    except (IntegrityError, DataError, InvalidRequestError, OperationalError, SQLAlchemyError) as exc:
+        error_msg = "Database Session Refresh SQLAlchemy Error: {}".format(str(exc))
+        logging.exception(error_msg)
+        raise SQLAlchemyException(error_msg)
+    except Exception as exc:
+        error_msg = "Database Session Refresh Generic Error: {}".format(str(exc))
+        logging.exception(error_msg)
+        raise SQLAlchemyException(error_msg)
+
+
+def sql_check_choices(self, key, value, choices):
+    if value in choices:
+        return value
+    raise ValueError("'{}' is not a valid choice for '{}' column in '{}' table"
+                     .format(value, key, type(self).__name__))

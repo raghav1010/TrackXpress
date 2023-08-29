@@ -1,11 +1,10 @@
 from src import APP
+from src.event_apis import API_ROUTES as EVENT_API_ROUTES
 
-COMMON_API_ROUTES = [
-]
 
 func_based_routes = ''
 
-class_based_routes = ''
+class_based_routes = EVENT_API_ROUTES
 
 
 def configure_app_routes():
