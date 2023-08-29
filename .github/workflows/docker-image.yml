@@ -17,4 +17,4 @@ jobs:
     - name: Build the Docker image
       run: docker-compose -f "docker-compose.yaml" build --no-cache
     - name: Test
-      run: docker exec app_track_xpress python -m unittest discover
+      run: docker exec $(docker ps --latest --quiet) python -m unittest discover
