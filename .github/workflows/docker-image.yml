@@ -15,6 +15,8 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build the Docker image
-      run: docker-compose -f "docker-compose.yaml" up -d --build
+      run: docker-compose -f "docker-compose.yaml" build --no-cache
+    - name: Docker-Up
+      run: docker-compose -f "docker-compose.yaml" up
     - name: Test
       run: docker exec app_track_xpress python -m unittest discover
