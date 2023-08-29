@@ -17,6 +17,7 @@ def save_error_and_return_result(error, code, result_dict):
 
 
 def validate_json_schema(data, jsonschema):
+    print("data: {}, jsonschema: {}".format(data, jsonschema))
     error = ""
     try:
         validate(instance=data, schema=jsonschema)

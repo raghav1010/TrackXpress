@@ -10,11 +10,10 @@ class TestUtils(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         ut_db = UtDb(BASE)
-        ut_db.drop_all_tables()
         ut_db.create_all_tables()
 
         sql_utils.SESSION = ut_db.sessionmaker
-        sql_utils.ENGINE = ut_db.sql_engine
+        sql_utils.ENGINE = ut_db.engine
 
     def test_event_creation(self):
 

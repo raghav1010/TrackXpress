@@ -6,12 +6,12 @@ from library.sql.utils import BASE
 
 class TrackingPlanTransaction(BASE, BaseSQLMixin, TimestampMixin):
     __tablename__ = "tracking_plan_transaction"
-    ref_id = Column(String(50), nullable=False, unique=True)
+    ref_id = Column(String, nullable=False, unique=True)
     tracking_plan_id = Column(String, ForeignKey("tracking_plan.id"))
     event_id = Column(String, ForeignKey("event.id"))
 
     def __repr__(self):
-        return "{}".format(self.name)
+        return "{}".format(self.ref_id)
 
     @classmethod
     def create(cls, **kwargs):

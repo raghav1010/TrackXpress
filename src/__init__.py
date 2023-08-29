@@ -6,7 +6,6 @@ from flask_migrate import migrate as run_migrations
 
 from src.common.env import POSTGRES_INSTANCE_URI
 
-logging.basicConfig(level=logging.INFO)
 
 APP = Flask(__name__)
 APP.config["SQLALCHEMY_DATABASE_URI"] = POSTGRES_INSTANCE_URI

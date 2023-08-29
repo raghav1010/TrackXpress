@@ -4,8 +4,8 @@ from src.event_apis.validators import validate_tracking_plan_events
 def get_events_list(data):
     events_list = list()
     if not data:
-        return events_list, "tracking_plan missing in request data"
-    events_list = data.get("rules", {}).get("events")
+        return events_list, "rules missing in request data"
+    events_list = data.get("events")
     error = ""
     if not events_list:
         error = "events missing in request data"
@@ -15,10 +15,13 @@ def get_events_list(data):
 
 
 def get_tracking_plan_creation_data(data):
-    creation_data = {
-        "source": data.get("source"),
-        "name": data.get("display_name")
-    }
+    creation_data = dict()
+    source = data.get("source")
+    name = data.get("display_name")
+    description = data.get("description")
+    if not (source and name):
+        return creation_data
+    creation_data.update(source=source, name=name, description=description)
     return creation_data
 
 

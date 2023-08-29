@@ -38,11 +38,15 @@ def update_event_record(event_record, data, session=None):
 
 @session_wrap
 def get_event_record_by_id(event_id, session=None):
+    if not event_id:
+        return None
     event_record = Event.get_by_id(event_id, session)
     return event_record
 
 
 @session_wrap
 def get_event_record_by_name(name, session=None):
+    if not name:
+        return None
     event_record = Event.get_by_name(name, session)
     return event_record
