@@ -20,7 +20,7 @@ class TestUtils(unittest.TestCase):
         self.setUpClass()
 
         event_record, error = create_event_record({
-            "name": "Order Viewed",
+            "name": "Order Viewed Test",
             "description": "Whose order viewed",
             "property_details": {
                 "product": "ap1",
@@ -28,4 +28,4 @@ class TestUtils(unittest.TestCase):
                 "currency": "INR"
             }
         })
-        self.assertEqual(event_record.name, "Order Viewed")
+        self.assertEqual(event_record.name, "Order Viewed Test")
