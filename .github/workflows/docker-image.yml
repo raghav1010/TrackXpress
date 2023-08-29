@@ -1,0 +1,20 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "main", "feature" ]
+  pull_request:
+    branches: [ "main", "feature" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build the Docker image
+      run: docker-compose -f "docker-compose.yaml" up -d --build
+    - name: Test
+      run: docker exec app_track_xpress python -m unittest discover
