@@ -14,10 +14,8 @@ class EventTrackerAPI(MethodView):
 
     def post(self):
         result_dict = get_api_result_dict()
-
         try:
             json_data = request.get_json(force=True)
-            print("request data: {}".format(json_data))
             if not json_data:
                 return save_error_and_return_result("No input data provided", 422, result_dict)
             tracking_plan = json_data.get("tracking_plan", {})
@@ -29,7 +27,6 @@ class EventTrackerAPI(MethodView):
             result_dict["result"]["code"] = 201
             response = Response(json.dumps(result_dict, default=str))
             response.headers = get_default_response_headers()
-            print("response: {}".format(response))
         except Exception as exc:
             logging.exception(str(exc))
             return save_error_and_return_result("something went wrong", 500, result_dict)
@@ -51,5 +48,4 @@ class EventTrackerAPI(MethodView):
         result_dict["result"]["records"] = serialized_event_records
         response = Response(json.dumps(result_dict, default=str))
         response.headers = get_default_response_headers()
-        print("response: {}".format(response))
         return response
