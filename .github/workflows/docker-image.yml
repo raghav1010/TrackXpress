@@ -16,7 +16,9 @@ jobs:
     - uses: actions/checkout@v3
     - name: Build the Docker image
       run: docker-compose -f "docker-compose.yaml" up -d --build
-    - name: Display containers
-      run: docker-compose ps -a
+    - name: Restart app container
+      run: docker restart app_track_xpress
     - name: Test
-      run: docker exec app_track_xpress python -m unittest discover
+      run: docker exec trackxpress-app.track_xpress python -m unittest discover
+    - name: Docker down
+      run: docker-compose -f "docker-compose.yaml" down
