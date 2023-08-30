@@ -17,7 +17,6 @@ def get_or_create_tracking_plan(data, session=None):
     tracking_plan_record = None
     error = ""
     creation_data = get_tracking_plan_creation_data(data)
-    print("creation_data: {}".format(creation_data))
     if not creation_data:
         if data.get("description"):
             error = "tracking plan must have display_name and source"
@@ -37,10 +36,8 @@ def get_or_create_tracking_plan(data, session=None):
 def get_or_create_tracking_plan_transaction(event_record, tracking_plan_record, session=None):
     error = ""
     transaction_ref_id = "{}_{}".format(event_record.name, tracking_plan_record.name)
-    print("transaction_ref_id: {}".format(transaction_ref_id))
     transaction_record = get_tracking_plan_transaction_record(transaction_ref_id, session=session)
     if transaction_record:
-        print("existing transaction record: {}".format(transaction_record))
         return transaction_record, error
     creation_data = {"tracking_plan_id": tracking_plan_record.id, "event_id": event_record.id,
                      "ref_id": transaction_ref_id}
@@ -54,7 +51,6 @@ def get_or_create_tracking_plan_transaction(event_record, tracking_plan_record, 
     if error:
         error = "event: {} could not be linked to plan: {}, reason: {}".\
             format(event_record.name, tracking_plan_record.name, error)
-    print("created transaction record: {}".format(transaction_record))
     return transaction_record, error
 
 
@@ -91,7 +87,6 @@ def create_tracking_plan_event(data, tracking_plan_record=None, session=None):
     except SQLAlchemyException as exc:
         return data_records, "event: {} could not be created, reason: {}".format(data.get("name"), str(exc))
     if tracking_plan_record:
-        print("here------------------------")
         transaction_record, error = get_or_create_tracking_plan_transaction(event_record, tracking_plan_record,
                                                                             session=session)
         if error:
@@ -122,7 +117,6 @@ def create_tracking_plan_records(tracking_plan, session=None):
         if error:
             return created_event_records, {"error": error, "code": 401}
         actioned_event_records.append(data_records.get("event_record"))
-    print("actioned_event_records: {}".format(data_records))
     created_event_records = actioned_event_records
     return created_event_records, dict()
 

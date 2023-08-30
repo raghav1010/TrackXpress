@@ -41,7 +41,7 @@ const Wrapper = () => {
       method: 'POST',
       body: JSON.stringify(payload),
       headers: {
-        accept: 'application/json'
+        accept: 'application/json',
       }
     })
     const data = await response.json();

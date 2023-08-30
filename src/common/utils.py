@@ -18,12 +18,10 @@ def save_error_and_return_result(error, code, result_dict):
     result_dict["error"] = {"message": error, "code": code}
     response = Response(json.dumps(result_dict, default=str))
     response.headers = get_default_response_headers()
-    print("response: {}".format(response))
     return response
 
 
 def validate_json_schema(data, jsonschema):
-    print("data: {}, jsonschema: {}".format(data, jsonschema))
     error = ""
     try:
         validate(instance=data, schema=jsonschema)
