@@ -15,6 +15,7 @@ docker-compose build --no-cache  # Build the containers
 
 docker-compose up # Run the app
 
+APP served at URL: http://localhost:3000/
 ```
 
 For running UTs:
@@ -33,4 +34,10 @@ For Github-Actions:
 
 ```
 Whenever making a pull request to feature branch or main branch, the build and tests would run as part of actions.
+```
+
+```
+local-url serving F.E: http://localhost:3000/
+
+local-url serving Backend-API: http://localhost:5050/
 ```
