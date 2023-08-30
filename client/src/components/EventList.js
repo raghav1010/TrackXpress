@@ -8,78 +8,31 @@ const EventList = () => {
         numberStyle: { color: 'darkorange' }
       }
   const [data, setData] = useState([]);
-//  const sample = `{
-//    string:"ABCDE",
-//    "number":1,
-//    "null":null,
-//    "boolean":true,
-//    "object":{
-//       "string":"ABCDE",
-//       "number":1,
-//       "null":null,
-//       "boolean":true
-//    },
-//    "array":[
-//       1,
-//       2,
-//       3,
-//       4,
-//       {
-//       "string":"ABCDE",
-//       "number":1,
-//       "null":null,
-//       "boolean":true,
-//          "array":[
-//       1,
-//       2,
-//       3,
-//       4,
-//       {
-//       "string":"ABCDE",
-//       "number":1,
-//       "null":null,
-//       "boolean":true
-//    }
-//    ]
-//    }
-//    ]`
+  const [error, setError] = useState('');
 
   useEffect(() => {
     (async function () {
-       let response = fetch('http://0.0.0.0:5050/api/get/events', {
+       let response = await fetch('http://0.0.0.0:5050/api/get/events', {
       method: 'GET',
       headers: {
         accept: 'application/json',
       },
     });
-    console.log(response)
-     let d = response.json();
-//      let d = [
-//        {
-//            "description": "Whose order viewed",
-//            "name": "Order Viewed 2",
-//            "property_details": {
-//                "currency": "INR",
-//                "price": 100,
-//                "product": "box"
-//            }
-//        },
-//        {
-//            "description": "Whose order viewed",
-//            "name": "Order Viewed 3",
-//            "property_details": {
-//                "currency": "Dollar",
-//                "price": 300,
-//                "product": "fridge"
-//            }
-//        }
-//    ]
-      setData(d);
+    let d = await response.json();
+    console.log(response, d);
+    if ( d.error ) {
+        setError(d.error.message);
+    } else {
+        setData(d.result.records);
+    }
     })();
   }, []);
 
   return (
     <div className="event-list-wrapper">
+      {error && (
+        <div className="form__wrapper--heading">{error}</div>
+      )}
       {data.length <= 0 && (
         <div className="form__wrapper--heading">No events found</div>
       )}

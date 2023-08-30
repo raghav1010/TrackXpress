@@ -1,5 +1,5 @@
 import logging
-
+import json
 from library.sql.exceptions import SQLAlchemyException
 from library.sql.utils import session_wrap, commit_session, refresh_session_instance
 from src.event_apis.utils import get_event_creation_data, get_event_updation_data, get_tracking_plan_creation_data, \
@@ -24,8 +24,8 @@ def get_or_create_tracking_plan(data, session=None):
         return tracking_plan_record, error
     tracking_plan_record = get_tracking_plan_record_by_source(creation_data.get("source"), session=session)
     if tracking_plan_record:
-        return tracking_plan_record, "tracking plan: {} already exists for source!"\
-            .format(tracking_plan_record.name)
+        return tracking_plan_record, "tracking plan: {} already exists for source: {}!"\
+            .format(tracking_plan_record.name, creation_data.get("source"))
     tracking_plan_record = get_tracking_plan_record_by_name(creation_data.get("name"), session=session)
     if tracking_plan_record:
         return tracking_plan_record, "tracking plan: {} already exists for source: {}!"\
@@ -73,8 +73,9 @@ def update_tracking_plan_event(event_record, data, session=None):
 
 def create_tracking_plan_event(data, tracking_plan_record=None, session=None):
     data_records = dict()
-    event_schema = data.get("rules", {}).get("properties", {})
-    event_data = data.get("data")
+    rules = json.loads(data.get("rules")) or {}
+    event_schema = rules.get("properties", {})
+    event_data = event_schema.get("data")
     error = validate_json_schema(event_data, event_schema)
     if error:
         return data_records, "event: {} could not be created, reason: {}".format(data.get("name"), error)

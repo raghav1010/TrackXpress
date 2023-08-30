@@ -1,3 +1,5 @@
+import json
+
 from src.event_apis.validators import validate_tracking_plan_events
 
 
@@ -26,10 +28,12 @@ def get_tracking_plan_creation_data(data):
 
 
 def get_event_creation_data(data):
+    rules = json.loads(data.get("rules")) or {}
+    event_schema = rules.get("properties", {})
     creation_data = {
         "name": data.get("name"),
         "description": data.get("description"),
-        "property_details": data.get("data")
+        "property_details": event_schema.get("data")
     }
     return creation_data
 
@@ -66,7 +70,7 @@ def serialize_event_records(event_records_list=None):
 
 def get_default_response_headers():
     headers = dict()
-    headers['Access-Control-Allow-Origin'] = 'true'
+    headers['Access-Control-Allow-Origin'] = '*'
     headers['Access-Control-Allow-Headers'] = 'Origin, X-Requested-With, Content-Type, Accept'
     headers['Access-Control-Allow-Methods'] = 'POST, GET, OPTIONS, DELETE'
     headers['Access-Control-Allow-Credentials'] = 'true'

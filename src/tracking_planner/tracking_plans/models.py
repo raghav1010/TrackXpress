@@ -16,9 +16,9 @@ class TrackingPlan(BASE, TimestampMixin):
     def __repr__(self):
         return "{}".format(self.name)
 
-    @validates("source")
-    def validate_req_type(self, key, source):
-        return sql_check_choices(self, key, source, TRACKING_PLAN_SOURCE_CHOICES)
+    # @validates("source")
+    # def validate_req_type(self, key, source):
+    #     return sql_check_choices(self, key, source, TRACKING_PLAN_SOURCE_CHOICES)
 
     @classmethod
     def create(cls, **kwargs):

@@ -1,7 +1,10 @@
 import logging
-
+import json
+from flask import Response
 from jsonschema import validate
 from jsonschema.exceptions import ValidationError, SchemaError
+
+from src.event_apis.utils import get_default_response_headers
 
 
 def get_api_result_dict(message=""):
@@ -13,7 +16,10 @@ def get_api_result_dict(message=""):
 
 def save_error_and_return_result(error, code, result_dict):
     result_dict["error"] = {"message": error, "code": code}
-    return result_dict
+    response = Response(json.dumps(result_dict, default=str))
+    response.headers = get_default_response_headers()
+    print("response: {}".format(response))
+    return response
 
 
 def validate_json_schema(data, jsonschema):

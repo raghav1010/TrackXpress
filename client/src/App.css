@@ -130,6 +130,7 @@ textarea::placeholder {
 .btn-container {
   display: flex;
   justify-content: flex-end;
+  padding-bottom: 1rem;
 }
 
 .btn-container>button {

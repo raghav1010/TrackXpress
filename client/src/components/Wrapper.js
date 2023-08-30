@@ -34,12 +34,35 @@ const Wrapper = () => {
     }
     if (!valid) return;
 
-    const response = await fetch("POST-URL");
+    const payload = getPayload();
+
+    const response = await fetch("http://localhost:5050/api/create/events",
+    {
+      method: 'POST',
+      body: JSON.stringify(payload),
+      headers: {
+        accept: 'application/json'
+      }
+    })
     const data = await response.json();
+    console.log("DATA", data)
     if (data.error) {
       toast(data.error.message);
     } else {
       toast(data.result.message);
+    }
+  }
+
+  function getPayload() {
+    return {
+        tracking_plan: {
+            display_name: trackingName,
+            description: trackingDecription,
+            source: 'mixpanel3',
+            rules: {
+                events
+            }
+        }
     }
   }
 
