@@ -23,6 +23,12 @@ For running UTs:
 docker exec app_track_xpress python -m unittest discover
 ```
 
+For running DB inside container:
+
+```
+docker exec -it db_track_xpress psql -U track_xpress_user -d track_xpress_db
+```
+
 For Github-Actions:
 
 ```
