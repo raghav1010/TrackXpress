@@ -62,3 +62,14 @@ def serialize_event_records(event_records_list=None):
         }
         serialized_records.append(event_dict)
     return serialized_records
+
+
+def get_default_response_headers():
+    headers = dict()
+    headers['Access-Control-Allow-Origin'] = 'true'
+    headers['Access-Control-Allow-Headers'] = 'Origin, X-Requested-With, Content-Type, Accept'
+    headers['Access-Control-Allow-Methods'] = 'POST, GET, OPTIONS, DELETE'
+    headers['Access-Control-Allow-Credentials'] = 'true'
+    headers['Content-Type'] = 'application/json'
+
+    return headers
