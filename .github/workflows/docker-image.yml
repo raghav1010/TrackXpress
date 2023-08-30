@@ -17,7 +17,7 @@ jobs:
     - name: Build the Docker image
       run: docker-compose -f "docker-compose.yaml" up -d --build
     - name: Restart app container
-      run: docker restart c
+      run: docker restart app_track_xpress
     - name: Test
       run: docker exec app_track_xpress python -m unittest discover
     - name: Docker down
