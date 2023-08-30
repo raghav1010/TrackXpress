@@ -1,9 +1,10 @@
 import logging
-from flask import request
+import json
+from flask import request, Response
 from flask.views import MethodView
 
 from src.event_apis.handlers import create_tracking_plan_records, get_all_event_records
-from src.event_apis.utils import serialize_event_records
+from src.event_apis.utils import serialize_event_records, get_default_response_headers
 from src.common.utils import get_api_result_dict, save_error_and_return_result
 
 
@@ -43,4 +44,7 @@ class EventTrackerAPI(MethodView):
         result_dict["result"]["message"] = "success"
         result_dict["result"]["code"] = 200
         result_dict["result"]["records"] = serialized_event_records
-        return result_dict
+        response = Response(json.dumps(result_dict, default=str))
+        response.headers = get_default_response_headers()
+        print("response: {}".format(response))
+        return response

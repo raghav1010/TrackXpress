@@ -1,17 +1,21 @@
 import logging
 
 from library.sql.exceptions import SQLAlchemyException
-from library.sql.utils import session_wrap, add_session_instance, flush_session
+from library.sql.utils import session_wrap, add_session_instance, flush_session, commit_session, \
+    refresh_session_instance
 
 from .models import TrackingPlan
 
 
-
-def create_tracking_plan_record(data, session=None):
+def create_tracking_plan_record(data, commit=False, session=None):
     try:
         tracking_plan_record = TrackingPlan.create(**data)
         add_session_instance(session, tracking_plan_record)
-        flush_session(session)
+        if commit:
+            commit_session(session)
+            refresh_session_instance(session, tracking_plan_record)
+        else:
+            flush_session(session)
     except SQLAlchemyException as exc:
         logging.exception(exc)
         return None, str(exc)
